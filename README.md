@@ -11,9 +11,9 @@ Trần Trí Nhân|12A1|ntritran999@gmail.com
 
 Chức năng|Người thực hiện|Ngày hoàn thành dự kiến
 -|-|-
-Danh sách học sinh|Trần Trí Nhân|30/04/23
-Phân tích số lượng học sinh|Trần Trí Nhân|30/04/23
-Phân tích điểm thi|Trần Trí Nhân|30/04/23
-Clustering|Trần Trí Nhân|30/04/23
-Regression|Trần Trí Nhân|30/04/23
-Classify|Trần Trí Nhân|30/04/23
+Danh sách học sinh|Trần Trí Nhân|10/05/23
+Phân tích số lượng học sinh|Trần Trí Nhân|10/05/23
+Phân tích điểm thi|Trần Trí Nhân|10/05/23
+Clustering|Trần Trí Nhân|10/05/23
+Regression|Trần Trí Nhân|10/05/23
+Classify|Trần Trí Nhân|10/05/23
