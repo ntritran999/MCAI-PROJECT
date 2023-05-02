@@ -46,18 +46,14 @@ def show_table():
         with col2:
             class_option = st.radio('Khối lớp',('Tất cả','Lớp 10', 'Lớp 11', 'Lớp 12'))
             df = class_filter()
-            df.reset_index(drop=True,inplace=True)
             
         with col3:
             room_option = st.selectbox('Phòng',('Tất cả','A114','A115'))
             df = room_filter()
-            df.reset_index(drop=True,inplace=True)
 
         with col4:
             session_option = st.multiselect('Buổi',['Sáng','Chiều'])
             df = session_filter()
-            if df is not None:
-                df.reset_index(drop=True,inplace=True)
     with st.container():
         st.write("Lớp chuyên")
         col1, col2, col3, col4, col5 = st.columns(5)
@@ -82,6 +78,12 @@ def show_table():
             st.checkbox("TH/SN",value=True)
             st.checkbox("Khác",value=True)
 
-
-    st.dataframe(df)
+    if df is not None and not df.empty:
+    	df.reset_index(drop=True,inplace=True)
+    	students_count = len(df.index)
+    	st.write('Số học sinh: ',students_count, df['GENDER'].value_counts())	
+    	st.write('GPA cao nhất: ', df['GPA'].max())
+    	st.write('-'*6,'thấp nhất: ', df['GPA'].min())
+    	st.write('-'*6,'trung bình: ', df['GPA'].mean().round(1))
+    	st.dataframe(df)
 
