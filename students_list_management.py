@@ -7,8 +7,7 @@ def show_table():
     def gender_filter(option,gender):
         if not option:
             df.drop(df[df['GENDER']==gender].index,inplace=True)   
-            df.reset_index(drop=True,inplace=True)
-    
+            
     def class_filter(): 
         for class_num in ['10','11','12']:
             if class_option == ('Lớp ' + class_num):
@@ -20,6 +19,7 @@ def show_table():
             if room_option == (room_name):
                 return df[df['PYTHON-CLASS'].str.contains(room_name[1:])]
         return df    
+    
     def session_filter():
         if len(session_option) == 1:
             if session_option[0] =='Sáng':
@@ -28,6 +28,28 @@ def show_table():
                 return df[df['PYTHON-CLASS'].str.contains('C')]
         elif len(session_option) == 2:
             return df 
+    def specialized_class():
+        if not literature:
+            df.drop(df[df['CLASS'].str.contains('CV')].index,inplace=True)   
+        if not math:
+            df.drop(df[df['CLASS'].str.contains('CT')].index,inplace=True)               
+        if not physics:
+            df.drop(df[df['CLASS'].str.contains('CL')].index,inplace=True)   
+        if not chemistry:
+            df.drop(df[df['CLASS'].str.contains('CH')].index,inplace=True)   
+        if not english:
+            df.drop(df[df['CLASS'].str.contains('CA')].index,inplace=True)   
+        if not IT:
+            df.drop(df[df['CLASS'].str.contains('CTIN')].index,inplace=True)           
+        if not hstry_geo:
+            df.drop(df[df['CLASS'].str.contains('CSD')].index,inplace=True)   
+        if not t_n:
+            df.drop(df[df['CLASS'].str.contains('CTRN')].index,inplace=True)   
+        if not th_sn:
+            df.drop(df[df['CLASS'].str.contains('TH|SN')].index,inplace=True)   
+        if not others:
+            df.drop(df[~df['CLASS'].str.contains('CV|CT|CL|CH|CA|CTIN|CSD|CTRN|TH|SN')].index,inplace=True)   
+
 
     df = pd.read_csv("py4ai-score.csv")
     df.fillna(0,inplace=True)
@@ -59,29 +81,30 @@ def show_table():
         col1, col2, col3, col4, col5 = st.columns(5)
     
         with col1:
-            st.checkbox("Văn",value=True)
-            st.checkbox("Toán",value=True)
+            literature = st.checkbox("Văn",value=True)
+            math = st.checkbox("Toán",value=True)
     
         with col2:
-            st.checkbox("Lý",value=True)
-            st.checkbox("Hóa",value=True)   
+            physics = st.checkbox("Lý",value=True)
+            chemistry = st.checkbox("Hóa",value=True)   
     
         with col3:
-            st.checkbox("Anh",value=True)
-            st.checkbox("Tin",value=True)
+            english = st.checkbox("Anh",value=True)
+            IT = st.checkbox("Tin",value=True)
     
         with col4:
-            st.checkbox("Sử Địa",value=True)
-            st.checkbox("Trung Nhật",value=True)
+            hstry_geo = st.checkbox("Sử Địa",value=True)
+            t_n = st.checkbox("Trung Nhật",value=True)
     
         with col5:
-            st.checkbox("TH/SN",value=True)
-            st.checkbox("Khác",value=True)
+            th_sn = st.checkbox("TH/SN",value=True)
+            others = st.checkbox("Khác",value=True)
+            
+        specialized_class()
 
     if df is not None and not df.empty:
     	df.reset_index(drop=True,inplace=True)
-    	students_count = len(df.index)
-    	st.write('Số học sinh: ',students_count, df['GENDER'].value_counts())	
+    	st.write('SỐ HỌC SINH : ',len(df.index), df['GENDER'].value_counts())	
     	st.write('GPA cao nhất: ', df['GPA'].max())
     	st.write('-'*6,'thấp nhất: ', df['GPA'].min())
     	st.write('-'*6,'trung bình: ', df['GPA'].mean().round(1))
