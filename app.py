@@ -1,5 +1,6 @@
 import streamlit as st
-from students_list_management import *
+from students_list_management import show_table
+from graphs import plotting
 
 def main():
     st.header("BẢNG ĐIỂM LỚP PY4AI")
@@ -10,9 +11,7 @@ def main():
     with tab1:
         show_table()
     with tab2:
-        st.header("A dog")
-        st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
-
+    	plotting()
     with tab3:
         st.header("An owl")
         st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
