@@ -4,11 +4,22 @@ import plotly.express as px
 
 
 df = pd.read_csv('py4ai-score.csv')
+df['Số học sinh'] = [1 for i in range(len(df))]
 
 for i in df.index:
+	if 'M' in df['GENDER'][i]:
+		df.loc[i, 'GENDER'] = 'Nam'
+	if 'F' in df['GENDER'][i]:
+		df.loc[i, 'GENDER'] = 'Nữ'
+
+	if '114' in df['PYTHON-CLASS'][i]:
+		df.loc[i, 'PYTHON-CLASS'] = 'Lớp 114'
+	if '115' in df['PYTHON-CLASS'][i]:
+		df.loc[i, 'PYTHON-CLASS'] = 'Lớp 115'
+
 	if 'CV' in df['CLASS'][i]: 
 		df.loc[i, 'CLASS'] = 'Chuyên Văn'
-	elif 'CT' in df['CLASS'][i]: 
+	elif 'CT1' in df['CLASS'][i] or 'CT2' in df['CLASS'][i] or 'CT3' in df['CLASS'][i]: 
 		df.loc[i, 'CLASS'] = 'Chuyên Toán'
 	elif 'CL' in df['CLASS'][i]: 
 		df.loc[i, 'CLASS'] = 'Chuyên Lý'
@@ -26,10 +37,11 @@ for i in df.index:
 		df.loc[i, 'CLASS'] = 'TH/SN'
 	else: 
 		df.loc[i, 'CLASS'] = 'Khác'
-		
-		
-def plotting():
+				
+def plot_student():
 	for category in ['GENDER','CLASS','PYTHON-CLASS']:
-		st.plotly_chart(px.pie(df,names=category))	
-
+		st.plotly_chart(px.pie(df,names=category,values='Số học sinh'))	
+def plot_score(option,list_of_option):
+	if option in list_of_option :
+		st.plotly_chart(px.box(df[option],labels={option:'Điểm'}))
 

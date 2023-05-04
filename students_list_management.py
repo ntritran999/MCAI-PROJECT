@@ -20,7 +20,7 @@ def show_table():
                 return df[df['PYTHON-CLASS'].str.contains(room_name[1:])]
         return df    
     
-    def session_filter():
+    def period_filter():
         if len(session_option) == 1:
             if session_option[0] =='Sáng':
                 return df[df['PYTHON-CLASS'].str.contains('S')]
@@ -32,7 +32,7 @@ def show_table():
         if not literature:
             df.drop(df[df['CLASS'].str.contains('CV')].index,inplace=True)   
         if not math:
-            df.drop(df[df['CLASS'].str.contains('CT')].index,inplace=True)               
+            df.drop(df[df['CLASS'].str.contains('CT1|CT2|CT3')].index,inplace=True)               
         if not physics:
             df.drop(df[df['CLASS'].str.contains('CL')].index,inplace=True)   
         if not chemistry:
@@ -62,20 +62,20 @@ def show_table():
             st.write('Giới tính')
             check_male = st.checkbox('Nam',value=True)
             check_female = st.checkbox('Nữ',value=True)
-            gender_filter(check_male,'M')
-            gender_filter(check_female,'F')        
+            
+                    
 
         with col2:
             class_option = st.radio('Khối lớp',('Tất cả','Lớp 10', 'Lớp 11', 'Lớp 12'))
-            df = class_filter()
+            
             
         with col3:
             room_option = st.selectbox('Phòng',('Tất cả','A114','A115'))
-            df = room_filter()
+            
 
         with col4:
             session_option = st.multiselect('Buổi',['Sáng','Chiều'])
-            df = session_filter()
+            
     with st.container():
         st.write("Lớp chuyên")
         col1, col2, col3, col4, col5 = st.columns(5)
@@ -100,13 +100,19 @@ def show_table():
             th_sn = st.checkbox("TH/SN",value=True)
             others = st.checkbox("Khác",value=True)
             
-        specialized_class()
+    df = class_filter()
+    df = room_filter()
+    df = period_filter()
+    if df is not None:
+    	gender_filter(check_female,'F')
+    	gender_filter(check_male,'M')
 
-    if df is not None and not df.empty:
-    	df.reset_index(drop=True,inplace=True)
-    	st.write('SỐ HỌC SINH : ',len(df.index), df['GENDER'].value_counts())	
-    	st.write('GPA cao nhất: ', df['GPA'].max())
-    	st.write('-'*6,'thấp nhất: ', df['GPA'].min())
-    	st.write('-'*6,'trung bình: ', df['GPA'].mean().round(1))
-    	st.dataframe(df)
+    	specialized_class()
+    	if not df.empty:
+    		df.reset_index(drop=True,inplace=True)
+    		st.write('SỐ HỌC SINH : ',len(df.index), df['GENDER'].value_counts())	
+    		st.write('GPA cao nhất: ', df['GPA'].max())
+    		st.write('-'*6,'thấp nhất: ', df['GPA'].min())
+    		st.write('-'*6,'trung bình: ', df['GPA'].mean().round(1))
+    		st.dataframe(df)
 
