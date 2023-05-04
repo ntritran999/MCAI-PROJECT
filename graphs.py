@@ -43,5 +43,6 @@ def plot_student():
 		st.plotly_chart(px.pie(df,names=category,values='Số học sinh'))	
 def plot_score(option,list_of_option):
 	if option in list_of_option :
-		st.plotly_chart(px.box(df[option],labels={option:'Điểm'}))
-
+		st.plotly_chart(px.box(df,y=option,color='GENDER'))
+		st.plotly_chart(px.box(df,y=option,x='CLASS',color='CLASS'))
+		st.plotly_chart(px.box(df,y=option,x='CLASS',color='GENDER'))
