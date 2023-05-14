@@ -17,3 +17,7 @@ Phân tích điểm thi|Trần Trí Nhân|10/05/23
 Clustering|Trần Trí Nhân|10/05/23
 Regression|Trần Trí Nhân|10/05/23
 Classify|Trần Trí Nhân|10/05/23
+
+
+## Link demo
+[Link](https://youtu.be/QPg3TS8en9w)
