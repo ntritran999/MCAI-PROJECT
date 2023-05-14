@@ -111,7 +111,7 @@ def show_table():
             th_sn = st.checkbox("TH/SN",value=True,key='thsn')
             others = st.checkbox("Khác",value=True,key='o')
         with col6:
-            interact_all = st.checkbox('Chọn/Xóa hết',key='sel', on_change=sel_callback)
+            interact_all = st.checkbox('Chọn/Xóa hết',value=True,key='sel', on_change=sel_callback)
             
     df = class_filter()
     df = room_filter()
