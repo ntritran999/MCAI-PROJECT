@@ -1,6 +1,9 @@
 import streamlit as st
 from students_list_management import show_table
 from graphs import plot_student,plot_score
+from classify import draw_classification
+from regression import draw_linear,draw_multi_linear
+
 
 def main():
     st.header("BẢNG ĐIỂM LỚP PY4AI")
@@ -19,9 +22,14 @@ def main():
     		session = st.radio('session_selection',list_of_sessions,horizontal=True,label_visibility='hidden')
     		plot_score(session,list_of_sessions)
     with tab3:
-        st.header("An owl")
-        st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
-
+        slider = st.slider('Số nhóm', 2,5,3)
+        draw_classification(slider)
+    with tab4:
+    	features = st.radio('Số đặc trưng',('2','3'),horizontal=True)
+    	if features == '2':
+    		draw_linear()
+    	else:
+    		draw_multi_linear()
 if __name__=="__main__":
     main()
 

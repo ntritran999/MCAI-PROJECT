@@ -4,6 +4,9 @@ import plotly.express as px
 
 
 df = pd.read_csv('py4ai-score.csv')
+df.fillna(0,inplace=True)
+df["REG-MC4AI"] = df["REG-MC4AI"].replace(0,"Rớt")
+df["REG-MC4AI"] = df["REG-MC4AI"].replace('Y',"Đậu")
 df['Số học sinh'] = [1 for i in range(len(df))]
 
 for i in df.index:
@@ -40,9 +43,11 @@ for i in df.index:
 				
 def plot_student():
 	for category in ['GENDER','CLASS','PYTHON-CLASS']:
-		st.plotly_chart(px.pie(df,names=category,values='Số học sinh'))	
+		st.plotly_chart(px.pie(df,names=category,values='Số học sinh'))
+	st.plotly_chart(px.pie(df,names='REG-MC4AI',values='Số học sinh'))	
 def plot_score(option,list_of_option):
 	if option in list_of_option :
 		st.plotly_chart(px.box(df,y=option,color='GENDER'))
 		st.plotly_chart(px.box(df,y=option,x='CLASS',color='CLASS'))
 		st.plotly_chart(px.box(df,y=option,x='CLASS',color='GENDER'))
+

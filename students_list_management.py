@@ -48,7 +48,18 @@ def show_table():
         if not th_sn:
             df.drop(df[df['CLASS'].str.contains('TH|SN')].index,inplace=True)   
         if not others:
-            df.drop(df[~df['CLASS'].str.contains('CV|CT|CL|CH|CA|CTIN|CSD|CTRN|TH|SN')].index,inplace=True)   
+            df.drop(df[~df['CLASS'].str.contains('CV|CT|CL|CH|CA|CTIN|CSD|CTRN|TH|SN')].index,inplace=True)
+    def sel_callback():
+    	st.session_state.liter = st.session_state.sel
+    	st.session_state.math = st.session_state.sel
+    	st.session_state.phy = st.session_state.sel
+    	st.session_state.chem = st.session_state.sel
+    	st.session_state.eng = st.session_state.sel
+    	st.session_state.it = st.session_state.sel
+    	st.session_state.hg = st.session_state.sel
+    	st.session_state.tn = st.session_state.sel
+    	st.session_state.thsn = st.session_state.sel
+    	st.session_state.o = st.session_state.sel
 
 
     df = pd.read_csv("py4ai-score.csv")
@@ -78,27 +89,29 @@ def show_table():
             
     with st.container():
         st.write("Lớp chuyên")
-        col1, col2, col3, col4, col5 = st.columns(5)
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
     
         with col1:
-            literature = st.checkbox("Văn",value=True)
-            math = st.checkbox("Toán",value=True)
+            literature = st.checkbox("Văn",value=True,key='liter')
+            math = st.checkbox("Toán",value=True,key='math')
     
         with col2:
-            physics = st.checkbox("Lý",value=True)
-            chemistry = st.checkbox("Hóa",value=True)   
+            physics = st.checkbox("Lý",value=True,key='phy')
+            chemistry = st.checkbox("Hóa",value=True,key='chem')   
     
         with col3:
-            english = st.checkbox("Anh",value=True)
-            IT = st.checkbox("Tin",value=True)
+            english = st.checkbox("Anh",value=True,key='eng')
+            IT = st.checkbox("Tin",value=True,key='it')
     
         with col4:
-            hstry_geo = st.checkbox("Sử Địa",value=True)
-            t_n = st.checkbox("Trung Nhật",value=True)
+            hstry_geo = st.checkbox("Sử Địa",value=True,key='hg')
+            t_n = st.checkbox("Trung Nhật",value=True,key='tn')
     
         with col5:
-            th_sn = st.checkbox("TH/SN",value=True)
-            others = st.checkbox("Khác",value=True)
+            th_sn = st.checkbox("TH/SN",value=True,key='thsn')
+            others = st.checkbox("Khác",value=True,key='o')
+        with col6:
+            interact_all = st.checkbox('Chọn/Xóa hết',key='sel', on_change=sel_callback)
             
     df = class_filter()
     df = room_filter()
